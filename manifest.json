@@ -1,0 +1,22 @@
+{
+    "name": "Cek alternatif teks dalam gambar",
+    "description": "Cek alternatif teks dalam gambar",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "action": {
+        "default_title": "Cek alternatif teks dalam gambar",
+        "default_popup": "popup.html"
+    }
+}
