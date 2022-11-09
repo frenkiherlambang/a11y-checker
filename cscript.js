@@ -10,28 +10,32 @@ list.forEach(function (item) {
 for (let i = 0; i < imgs.length; i++) {
     images.push([imgs[i].src, imgs[i].alt]);
 }
+
+var AAlargeCount = 0;
+var AAsmallAAALargeCount = 0;
+var AAAsmallCount = 0;
+
 for (let i = 0; i < ps.length; i++) {
     var parentRgb = getComputedStyle(ps[i].parentNode).getPropertyValue('color');
-//    alert(parentRgb);
+
     if (parentRgb.includes("rgba")) {
-        var parentRgb = parentRgb.replace('rgba(','');
-        parentRgb = parentRgb.replace(')','');
+        var parentRgb = parentRgb.replace('rgba(', '');
+        parentRgb = parentRgb.replace(')', '');
         parentRgb = parentRgb.split(',');
     } else {
-        var parentRgb = parentRgb.replace('rgb(','');
-        parentRgb = parentRgb.replace(')','');
+        var parentRgb = parentRgb.replace('rgb(', '');
+        parentRgb = parentRgb.replace(')', '');
         parentRgb = parentRgb.split(',');
     }
-  //  alert(rD + " " + gD + " " + bD);
 
     var paragraphRgb = getComputedStyle(ps[i]).getPropertyValue('color');
     if (paragraphRgb.includes("rgba")) {
-        var paragraphRgb = paragraphRgb.replace('rgba(','');
-        paragraphRgb = paragraphRgb.replace(')','');
+        var paragraphRgb = paragraphRgb.replace('rgba(', '');
+        paragraphRgb = paragraphRgb.replace(')', '');
         paragraphRgb = paragraphRgb.split(',');
     } else {
-        var paragraphRgb = paragraphRgb.replace('rgb(','');
-        paragraphRgb = paragraphRgb.replace(')','');
+        var paragraphRgb = paragraphRgb.replace('rgb(', '');
+        paragraphRgb = paragraphRgb.replace(')', '');
         paragraphRgb = paragraphRgb.split(',');
     }
     colorParentluminance = luminance(parentRgb[0], parentRgb[1], parentRgb[2]);
@@ -40,11 +44,15 @@ for (let i = 0; i < ps.length; i++) {
         ? ((colorParagraphluminance + 0.05) / (colorParentluminance + 0.05))
         : ((colorParentluminance + 0.05) / (colorParagraphluminance + 0.05));
     if (ratio < 1 / 3) {
-        AAlarge++;
-        AAAsmall++;
-    } 
-    if (ratio < 1/4.5) {
-    {}
+        AAlargeCount++;
+    }
+    if (ratio < 1 / 4.5) {
+
+        AAsmallAAALargeCount++;
+    }
+    if (ratio < 1 / 7) {
+        AAAsmallCount++;
+    }
 
     const result = `
         AA-level large text: ${ratio < 1 / 3 ? 'PASS' : 'FAIL'} \n
